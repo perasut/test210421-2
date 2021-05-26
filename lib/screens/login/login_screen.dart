@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   TextFormField(
                     autofocus: false,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.name,
                     style: TextStyle(fontSize: 20, color: Colors.teal),
                     decoration: InputDecoration(
                         icon: Icon(Icons.email), labelText: 'กรอกอีเมล์'),
@@ -91,8 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           formKey.currentState.save();
                           // print(_email + _password);
                           var userData = {
-                            'email': _email,
-                            'password': _password
+                            'User': _email,
+                            'Password': _password
                           };
                           _loginProcess(userData);
                         }
@@ -121,33 +121,41 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       var response = await CallAPI().loginAPI(userData);
       var body = json.decode(response.body);
-
+      print(userData);
       print(body['message']);
+      print(body['status']);
+      // print(body);
+      // print(_email);
 
       // เช็คว่าถ้าลงทะเบียนสำเร็จ
-      if (body['status'] == 'success' && body['data']['status'] == '1') {
+      if (body['status'] == 'success') {
+        print(body['data']);
+        // if (body['status'] == 'success' && body['data']['status'] == '1') {
         // สร้าง Object แบบ Sharedprefference
-        SharedPreferences sharedPreferences =
-            await SharedPreferences.getInstance();
+        // SharedPreferences sharedPreferences =
+        //     await SharedPreferences.getInstance();
 
-        // เก็บค่าลงตัวแปรแบบ SharedPrefference
-        sharedPreferences.setInt('appStep', 2);
-        sharedPreferences.setString(
-            'storeFullname',
-            body['data']['prename'] +
-                body['data']['firstname'] +
-                ' ' +
-                body['data']['lastname']);
-        sharedPreferences.setString('storeAvatar', body['data']['avatar']);
-        sharedPreferences.setString('storeEmail', body['data']['email']);
-        sharedPreferences.setString('storePassword', _password);
+        // // เก็บค่าลงตัวแปรแบบ SharedPrefference
+        // sharedPreferences.setInt('appStep', 2);
+        // sharedPreferences.setString(
+        //     'storeFullname',
+        //     body['data']['name'] +
+        //         body['data']['nameshop'] +
+        //         ' ' +
+        //         body['data']['chooseType']);
+        // sharedPreferences.setString('storeAvatar', body['data']['avatar']);
+        // sharedPreferences.setString('storeEmail', body['data']['email']);
+        // sharedPreferences.setString('storePassword', _password);
 
         // ส่งไปหน้า dashboard
         Navigator.pushReplacementNamed(context, '/dashboard');
       } else {
         _showDialog('มีข้อผิดพลาด', 'ข้อมูลไม่ถูกต้อง ลองใหม่');
+        // print(_password);
+        // print(_email);
       }
     } catch (e) {
+      print(e);
       Fluttertoast.showToast(
           msg: "มีข้อผิดพลาดการโหลดข้อมูล",
           toastLength: Toast.LENGTH_LONG,

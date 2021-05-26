@@ -10,55 +10,59 @@ class CallAPI {
       {'Content-Type': 'application/json', 'Accept': 'application/json'};
 
   final String baseAPIURL =
-      'https://www.itgenius.co.th/sandbox_api/flutteradvapi/public/api/';
+      // 'https://www.itgenius.co.th/sandbox_api/flutteradvapi/public/api/';
+      'http://202.43.47.251/cabbitslim/public/api/';
 
   // Login API
   loginAPI(data) async {
     return await http.post(baseAPIURL + 'login',
         body: jsonEncode(data), headers: _setHeaders());
+    // body: jsonEncode(data));
   }
 
   // Read User Profile
   Future<LoginModel> getProfile(data) async {
     final response = await http.post(baseAPIURL + 'login',
         body: jsonEncode(data), headers: _setHeaders());
-    if (response.statusCode == 200) {
-      return loginModelFromJson(response.body);
-    } else {
-      return null;
-    }
+    // body: jsonEncode(data));
+    return loginModelFromJson(response.body);
+    // if (response.statusCode == 200) {
+    //   return loginModelFromJson(response.body);
+    // } else {
+    //   return null;
+    // }
   }
 
   // Read Last News
-  Future<List<NewsModel>> getLastNews() async {
-    final response =
-        await http.get(baseAPIURL + 'lastnews', headers: _setHeaders());
-    if (response.body != null) {
-      return newsModelFromJson(response.body);
-    } else {
-      return null;
-    }
-  }
+  // Future<List<NewsModel>> getLastNews() async {
+  //   final response =
+  //       await http.get(baseAPIURL + 'lastnews', headers: _setHeaders());
+  //   if (response.body != null) {
+  //     return newsModelFromJson(response.body);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   // Read All News
-  Future<List<NewsModel>> getAllNews() async {
-    final response =
-        await http.get(baseAPIURL + 'news', headers: _setHeaders());
-    if (response.body != null) {
-      return newsModelFromJson(response.body);
-    } else {
-      return null;
-    }
-  }
+  // Future<List<NewsModel>> getAllNews() async {
+  //   final response =
+  //       await http.get(baseAPIURL + 'news', headers: _setHeaders());
+  //   if (response.body != null) {
+  //     return newsModelFromJson(response.body);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   // Read News Detail By ID
-  Future<NewsDetailModel> getNewsDetail(id) async {
-    final response =
-        await http.get(baseAPIURL + 'news/' + id, headers: _setHeaders());
-    if (response.body != null) {
-      return newsDetailModelFromJson(response.body);
-    } else {
-      return null;
-    }
-  }
+  // Future<NewsDetailModel> getNewsDetail(id) async {
+  //   final response =
+  //       await http.get(baseAPIURL + 'news/' + id, headers: _setHeaders());
+  //   if (response.body != null) {
+  //     return newsDetailModelFromJson(response.body);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }
